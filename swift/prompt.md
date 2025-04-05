@@ -1,0 +1,1 @@
+can  you create html page using tailwind for styling, if react is needed i would prefer skipping it and using alpinejs which is more minimal and just as powerful, and if chart extension is needed u can add that, but I would like the page to be sort of like infographic or diagramming of how swift apps work

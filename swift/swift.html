@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift App Architecture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.0/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8" x-data="{
+        activeSection: 'overview',
+        showModal: false,
+        modalContent: '',
+        setActive(section) {
+            this.activeSection = section;
+        },
+        openModal(content) {
+            this.modalContent = content;
+            this.showModal = true;
+        }
+    }">
+        <!-- Header -->
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-3">Swift App Architecture</h1>
+            <p class="text-lg text-gray-600">An interactive diagram of how Swift applications function</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="mb-8">
+            <ul class="flex flex-wrap justify-center space-x-2 space-y-2 md:space-y-0">
+                <li>
+                    <button @click="setActive('overview')"
+                            :class="activeSection === 'overview' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'"
+                            class="px-4 py-2 rounded-md font-medium transition-colors duration-200">
+                        Overview
+                    </button>
+                </li>
+                <li>
+                    <button @click="setActive('lifecycle')"
+                            :class="activeSection === 'lifecycle' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'"
+                            class="px-4 py-2 rounded-md font-medium transition-colors duration-200">
+                        App Lifecycle
+                    </button>
+                </li>
+                <li>
+                    <button @click="setActive('uikit')"
+                            :class="activeSection === 'uikit' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'"
+                            class="px-4 py-2 rounded-md font-medium transition-colors duration-200">
+                        UIKit Architecture
+                    </button>
+                </li>
+                <li>
+                    <button @click="setActive('swiftui')"
+                            :class="activeSection === 'swiftui' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'"
+                            class="px-4 py-2 rounded-md font-medium transition-colors duration-200">
+                        SwiftUI Architecture
+                    </button>
+                </li>
+                <li>
+                    <button @click="setActive('patterns')"
+                            :class="activeSection === 'patterns' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'"
+                            class="px-4 py-2 rounded-md font-medium transition-colors duration-200">
+                        Design Patterns
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Modal -->
+        <div x-show="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" @click.away="showModal = false">
+            <div class="bg-white p-6 rounded-lg max-w-lg w-full max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Detail View</h3>
+                    <button @click="showModal = false" class="text-gray-400 hover:text-gray-600">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div x-html="modalContent"></div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <main class="bg-white rounded-lg shadow-lg p-6">
+            <!-- Overview Section -->
+            <section x-show="activeSection === 'overview'" class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Swift App Architecture Overview</h2>
+
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="w-full md:w-1/2">
+                        <div class="border border-gray-200 rounded-lg p-4 h-full">
+                            <h3 class="text-xl font-semibold mb-3">Core Components</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-blue-100 text-blue-800 font-semibold mr-2">1</span>
+                                    <div>
+                                        <span class="font-medium">Swift Language</span>
+                                        <p class="text-gray-600 text-sm">Type-safe, modern programming language developed by Apple</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-blue-100 text-blue-800 font-semibold mr-2">2</span>
+                                    <div>
+                                        <span class="font-medium">Frameworks (UIKit/SwiftUI)</span>
+                                        <p class="text-gray-600 text-sm">UI frameworks for building interfaces</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-blue-100 text-blue-800 font-semibold mr-2">3</span>
+                                    <div>
+                                        <span class="font-medium">Foundation</span>
+                                        <p class="text-gray-600 text-sm">Provides base functionality for apps</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-blue-100 text-blue-800 font-semibold mr-2">4</span>
+                                    <div>
+                                        <span class="font-medium">App Delegate/Scene Delegate</span>
+                                        <p class="text-gray-600 text-sm">Manages app lifecycle and system events</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <div class="border border-gray-200 rounded-lg p-4 h-full" x-data="{
+                            init() {
+                                const ctx = document.getElementById('architecture-chart').getContext('2d');
+                                new Chart(ctx, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: ['UI Layer', 'Business Logic', 'Data Layer', 'System Integration'],
+                                        datasets: [{
+                                            data: [30, 25, 25, 20],
+                                            backgroundColor: [
+                                                '#3B82F6', // blue
+                                                '#10B981', // green
+                                                '#F59E0B', // amber
+                                                '#8B5CF6'  // purple
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'bottom'
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }">
+                            <h3 class="text-xl font-semibold mb-3">Swift App Structure</h3>
+                            <div class="aspect-square max-w-xs mx-auto">
+                                <canvas id="architecture-chart"></canvas>
+                            </div>
+                            <div class="mt-4 text-sm text-gray-600">
+                                <p>Swift apps typically follow a layered architecture pattern separating concerns between presentation, business logic, and data handling.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-3">Swift App Flow</h3>
+                    <div class="relative overflow-x-auto">
+                        <div class="grid grid-cols-5 gap-4 w-full min-w-[600px]">
+                            <!-- App Launch -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                                    <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-center font-medium">App Launch</span>
+                                <button @click="openModal('<h4 class=\'text-lg font-semibold mb-2\'>App Launch Process</h4><p>When a Swift app launches, the system creates a process, loads the app\'s executable code into memory, and calls the app\'s entry point: <code>UIApplicationMain</code> for UIKit or the <code>@main</code> attribute for SwiftUI.</p><p class=\'mt-2\'>The system then initializes the core objects, including the app delegate and potentially a scene delegate, before displaying the initial user interface.</p>')" class="text-blue-600 text-sm hover:underline mt-1">
+                                    Details
+                                </button>
+                            </div>
+
+                            <!-- System Initialization -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-2">
+                                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-center font-medium">System Init</span>
+                                <button @click="openModal('<h4 class=\'text-lg font-semibold mb-2\'>System Initialization</h4><p>During this phase, the app initializes frameworks, loads resources, and establishes connections to system services. This includes setting up Core Data stacks, configuring network services, and initializing third-party libraries.</p><p class=\'mt-2\'>The app also registers for important notifications and prepares background tasks if needed.</p>')" class="text-blue-600 text-sm hover:underline mt-1">
+                                    Details
+                                </button>
+                            </div>
+
+                            <!-- UI Setup -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center mb-2">
+                                    <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-center font-medium">UI Setup</span>
+                                <button @click="openModal('<h4 class=\'text-lg font-semibold mb-2\'>User Interface Setup</h4><p>In UIKit, this involves creating window and view controller hierarchies, while in SwiftUI, this involves building the view hierarchy with the body property of views.</p><p class=\'mt-2\'>The system loads the initial view controllers from storyboards or loads the root view from the SwiftUI App structure, then presents them to the user.</p>')" class="text-blue-600 text-sm hover:underline mt-1">
+                                    Details
+                                </button>
+                            </div>
+
+                            <!-- User Interaction -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                                    <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-center font-medium">User Interaction</span>
+                                <button @click="openModal('<h4 class=\'text-lg font-semibold mb-2\'>User Interaction Handling</h4><p>User interactions trigger various events that flow through the app. In UIKit, user interaction is processed through the Responder Chain, with events handled by appropriate view controllers and views.</p><p class=\'mt-2\'>In SwiftUI, interactions are managed declaratively through bindings, state objects, and other property wrappers which trigger automatic UI updates.</p>')" class="text-blue-600 text-sm hover:underline mt-1">
+                                    Details
+                                </button>
+                            </div>
+
+                            <!-- App Lifecycle -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mb-2">
+                                    <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-center font-medium">Lifecycle Management</span>
+                                <button @click="openModal('<h4 class=\'text-lg font-semibold mb-2\'>App Lifecycle Management</h4><p>Swift apps transition between various states: Not Running, Inactive, Active, Background, and Suspended. The app delegate handles app-wide state changes, while scene delegates in iOS 13+ manage scene-specific lifecycle events.</p><p class=\'mt-2\'>These transitions trigger lifecycle methods where the app can save data, update UI, and manage resources appropriately based on foreground/background status.</p>')" class="text-blue-600 text-sm hover:underline mt-1">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Flow Arrows -->
+                        <div class="absolute top-10 left-0 w-full pointer-events-none">
+                            <svg class="w-full h-4" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="17%" y1="50%" x2="33%" y2="50%" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" />
+                                <line x1="37%" y1="50%" x2="53%" y2="50%" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" />
+                                <line x1="57%" y1="50%" x2="73%" y2="50%" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" />
+                                <line x1="77%" y1="50%" x2="93%" y2="50%" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" />
+
+                                <polygon points="33%,50% 31%,48% 31%,52%" fill="#CBD5E1" />
+                                <polygon points="53%,50% 51%,48% 51%,52%" fill="#CBD5E1" />
+                                <polygon points="73%,50% 71%,48% 71%,52%" fill="#CBD5E1" />
+                                <polygon points="93%,50% 91%,48% 91%,52%" fill="#CBD5E1" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- App Lifecycle Section -->
+            <section x-show="activeSection === 'lifecycle'" class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Swift App Lifecycle</h2>
+
+                <div class="relative py-10">
+                    <!-- States -->
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        <!-- Not Running -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div class="text-center mb-3">
+                                <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gray-200 mb-2">
+                                    <svg class="h-6 w-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold">Not Running</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">App isn't launched or was terminated by the system</p>
+                        </div>
+
+                        <!-- Inactive -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-blue-50">
+                            <div class="text-center mb-3">
+                                <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-2">
+                                    <svg class="h-6 w-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold">Inactive</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">Running in foreground but not receiving events (e.g., during transitions)</p>
+                        </div>
+
+                        <!-- Active -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-green-50">
+                            <div class="text-center mb-3">
+                                <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-2">
+                                    <svg class="h-6 w-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold">Active</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">Running in foreground and receiving events</p>
+                        </div>
+
+                        <!-- Background -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-yellow-50">
+                            <div class="text-center mb-3">
+                                <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 mb-2">
+                                    <svg class="h-6 w-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold">Background</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">Running code in the background, not visible to user</p>
+                        </div>
+
+                        <!-- Suspended -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-purple-50">
+                            <div class="text-center mb-3">
+                                <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-purple-100 mb-2">
+                                    <svg class="h-6 w-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="font-semibold">Suspended</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">In memory but not executing code, can be terminated without notice</p>
+                        </div>
+                    </div>
+
+                    <!-- Lifecycle methods section -->
+                    <div class="mt-12">
+                        <h3 class="text-xl font-semibold mb-4">Key Lifecycle Methods</h3>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Framework</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- UIKit Methods -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-blue-50">UIKit</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>application(_:didFinishLaunchingWithOptions:)</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Called when the app launches, for one-time setup</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-blue-50">UIKit</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>sceneWillEnterForeground(_:)</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Scene is about to begin running in the foreground</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-blue-50">UIKit</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>sceneDidBecomeActive(_:)</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Scene is now active and receiving events</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-blue-50">UIKit</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>sceneWillResignActive(_:)</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Scene is about to stop receiving events</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-blue-50">UIKit</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>sceneDidEnterBackground(_:)</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Scene has entered the background</td>
+                                    </tr>
+
+                                    <!-- SwiftUI Methods -->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-green-50">SwiftUI</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>init()</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Initialize app and state</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-green-50">SwiftUI</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>onAppear</code></td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">View appeared on screen</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 bg-green-50">SwiftUI</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><code>onDisappear</code></td>
+                                        <t
